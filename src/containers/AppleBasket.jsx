@@ -22,7 +22,7 @@ class AppleBasket extends React.Component {
         };
         this.props.appleBasket.apples.forEach(apple=>{
             let selector = apple.isEaten ? 'appleEaten' : 'appleNow';
-                status[selector].quantitiy ++;
+                status[selector].quantity ++;
                 status[selector].weight += apple.weight;
 
         })
@@ -50,16 +50,16 @@ class AppleBasket extends React.Component {
 
     let { appleBasket, actions } = this.props;
 
-    console.log("this.props::: " + this.props);
-    console.log("appleBasket::: " + appleBasket);
-
-    debugger;
-
     let { apples, isPicking } = appleBasket;
     let status = this.calculateStatus();
+
+    console.log("status:::" + status);
+    //debugger;
+
+
     let {
         appleNow: {
-            quantitiy:notEatenQuantity, 
+            quantity:notEatenQuantity, 
             weight: notEatenWeight
         },
         appleEaten: {
