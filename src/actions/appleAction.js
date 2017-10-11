@@ -19,13 +19,13 @@ let actions = {
     pickApple: function() {
 
         return function(dispatch, getState) {
-            /** 如果正在摘苹果，则结束这个thunk, 不执行摘苹果 */
+            /** if isPicking is true，end this thunk, don't run pick apple */
             if (getState().appleBasket.isPicking){
                 return;
             }
 
 
-            /** 通知开始摘苹果 */
+            /** begin to pick apple */
             dispatch(actions.beginPickApple());
 
             fetch('https://hacker-news.firebaseio.com/v0/jobstories.json')

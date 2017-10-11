@@ -1,82 +1,94 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import {bindActionCreater} from 'redux'; //TODO: learning
+
 import AppleItem from '../components/AppleItem.jsx'
+import actions from '../actions/appleAction.js'
+//import '../styles/appleBasket.scss'
 
 class AppleBasket extends React.Component {
 
+    //get the status of apples, i
+    calculateStatus(){
+        let status={
+            appleNow:{
+                quantity:0,
+                weight:0
+            },
+            appleEaten:{
+                quantity:0,
+                weight:0
+            }
+        };
+        this.props.appleBasket.apples.forEach(apple=>{
+            let selector = apple.isEaten ? 'appleEaten' : 'appleNow';
+                status[selector].quantitiy ++;
+                status[selector].weight += apple.weight;
+
+        })
+        return status;
+    }
+
+    getAppleItem(apples){
+        let data=[];
+        apples.forEach(apple => {
+            if(!apple.isEaten){
+                data.push(<AppleItem apple={apple} eatApple={this.props.actions.eatApple} key={apple.id}/>)
+            }
+        });
+
+        if(!data.length) data.push(<div className="empty-tip" key="empty">Applebasket is empty!</div>);
+
+        return data;
+    }
+
+
+
   render(){
 
-    let { state } = this.props;
+    //get data from props
 
-        //这部分从对应的 appleBasketReducer.js 中拷贝
-        let mockState = {
-            isPicking : false,
-            newAppleId: 3,
-            apples: [
-                {
-                    
-                    id: 1,
-                    weight: 235,
-                    isEaten: true
-                },
-                {
-                    
-                    id: 2,
-                    weight: 256,
-                    isEaten: false
-                }
-            ]
-        };
-
-    //是否开启模拟数据的开关，注释这行代码关闭模拟数据
-    state = mockState;
-
-    //对 state 做显示级别的转化
-    let stats = {
+    let { appleBasket, actions } = this.props;
+    let { apples, isPicking } = appleBasket;
+    let status = this.calculateStatus();
+    let {
         appleNow: {
-            quantity: 0,
-            weight: 0
+            quantitiy:notEatenQuantity, 
+            weight: notEatenWeight
         },
         appleEaten: {
-            quantity: 0,
-            weight: 0
+            quantity: EatenQuantity, 
+            weight: EatenWeight
         }
-    };
-
-    state.apples.map(apple => {
-        let selector = apple.isEaten ? 'appleEaten':'appleNow';
-        stats[selector].quantity ++;
-        stats[selector].weight += apple.weight;
-    })
-
+    } = status;
 
     return (
       <div className="appleBasket">
-        <div className="title">苹果篮子</div>
+        <div className="title">Applebasket</div>
 
         <div className="stats">
             <div className="section">
-                <div className="head">当前</div>
+                <div className="head">Apple</div>
                 <div className="content">
-                    {stats.appleNow.quantity}个苹果，
-                    {stats.appleNow.weight}克
+                    {stats.appleNow.quantity} appls，
+                    {stats.appleNow.weight} g
                 </div>
             </div>
             <div className="section">
-                <div className="head">已吃掉</div>
+                <div className="head">Eaten</div>
                 <div className="content">
-                    {stats.appleEaten.quantity}个苹果，
-                    {stats.appleEaten.weight}克
+                    {stats.appleEaten.quantity} apple，
+                    {stats.appleEaten.weight} g
                 </div>
             </div>            
         </div>
 
         <div className="appleList">
-            { state.apples.map(apple => <AppleItem state ={apple} key={apple.id} />) }
+           {this.getAppleItem(apples)}
         </div>
 
         <div className="btn-div">
-            <button>摘苹果</button>
+            <button className={isPicking ? 'disable' : ''} onClick={action.pickApple}>Pick Apples</button>
         </div>
 
       </div>
@@ -85,10 +97,12 @@ class AppleBasket extends React.Component {
 
 }
 
-function select(state) {
-    return {
-        state: state.appleBasket
-    }
-}
+const mapStateToProps = state => ({
+    appleBasket: state.appleBasket
+});
+
+const mapDispatchToProps = dispatch => ({
+    actions: bindActionCreators(action, dispatch)
+});
 
 export default AppleBasket;

@@ -1,4 +1,7 @@
-import { fromJS } from 'immutable';  //为什么immutable 没写入package.json 好奇怪
+import { fromJS } from 'immutable';  //TODO: learn immutable
+
+//2 missions of reducer: 1. init state 2. handle action
+
 
 const initialState = {
     isPicking: false,
@@ -31,7 +34,7 @@ export default (state = initialState, action) => {
 
         case 'apple/BEGIN_PICK_APPLE':
 
-            /** 将isPicking设置true */
+            /** set isPicking as true */
             return fromJS(state).set('isPicking', true).toJS();
 
         case 'apple/DONE_PICK_APPLE':
@@ -42,7 +45,7 @@ export default (state = initialState, action) => {
                 isEaten: false
             };
 
-            /** 在apples中新增一个newApple， 将newAppleId增加1， 将isPicking设为false*/
+            /** add newApple in Array: apples， set newAppleId plus 1， set isPicking as false */
             return fromJS(state).update('apples', list => list.push(newApple))
                                 .set('newAppleId', state.newAppleId + 1)
                                 .set('isPicking', false)
@@ -50,12 +53,12 @@ export default (state = initialState, action) => {
 
         case 'apple/FAIL_PICK_APPLE':
 
-            /** 将isPicking设置false */
+            /** set isPicking as false */
             return fromJS(state).set('isPicking', false).toJS();
 
         case 'apple/EAT_APPLE':
 
-            /** 将id对应索引值的数组的isEaten设为true,表示已吃*/
+            /** set the apple in apples with given id isEaten as true*/
             return fromJS(state).setIn(['apples', action.payload, 'isEaten'], true).toJS();
 
         default:
