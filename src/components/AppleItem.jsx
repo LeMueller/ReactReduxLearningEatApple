@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/appleItem.scss';
+//import '../styles/appleItem.scss';
 import PropTypes from 'prop-types';
 
 let appleImage = require('../images/apple.png');
@@ -31,8 +31,8 @@ class AppleItem extends React.Component {
 }
 
 AppleItem.propsTypes={
-    eatApple.PropTypes.func.isRequired,
-    apple.PropTypes.object.isRequired
+    eatApple: PropTypes.func.isRequired,
+    apple: PropTypes.object.isRequired
 }
 
 export default AppleItem;

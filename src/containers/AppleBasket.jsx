@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {bindActionCreater} from 'redux'; //TODO: learning
+import {bindActionCreaters} from 'redux'; //TODO: learning
 
 import AppleItem from '../components/AppleItem.jsx'
 import actions from '../actions/appleAction.js'
@@ -70,15 +70,15 @@ class AppleBasket extends React.Component {
             <div className="section">
                 <div className="head">Apple</div>
                 <div className="content">
-                    {stats.appleNow.quantity} appls，
-                    {stats.appleNow.weight} g
+                    {notEatenQuantity} appls，
+                    {notEatenWeight} g
                 </div>
             </div>
             <div className="section">
                 <div className="head">Eaten</div>
                 <div className="content">
-                    {stats.appleEaten.quantity} apple，
-                    {stats.appleEaten.weight} g
+                    {EatenQuantity} apple，
+                    {EatenWeight} g
                 </div>
             </div>            
         </div>
@@ -88,7 +88,7 @@ class AppleBasket extends React.Component {
         </div>
 
         <div className="btn-div">
-            <button className={isPicking ? 'disable' : ''} onClick={action.pickApple}>Pick Apples</button>
+            <button className={isPicking ? 'disable' : ''} onClick={actions.pickApple}>Pick Apples</button>
         </div>
 
       </div>
@@ -102,7 +102,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    actions: bindActionCreators(action, dispatch)
+    actions: bindActionCreators(actions, dispatch)
 });
 
-export default AppleBasket;
+export default connect(mapStateToProps, mapDispatchToProps)(AppleBasket);
