@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {bindActionCreaters} from 'redux'; //TODO: learning
+import {bindActionCreators} from 'redux'; //TODO: learning
 
 import AppleItem from '../components/AppleItem.jsx'
 import actions from '../actions/appleAction.js'
@@ -49,6 +49,12 @@ class AppleBasket extends React.Component {
     //get data from props
 
     let { appleBasket, actions } = this.props;
+
+    console.log("this.props::: " + this.props);
+    console.log("appleBasket::: " + appleBasket);
+
+    debugger;
+
     let { apples, isPicking } = appleBasket;
     let status = this.calculateStatus();
     let {

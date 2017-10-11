@@ -8,7 +8,7 @@ import { createStore, applyMiddleware  } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 
-import reducer from '../reducers/appleBasketReducer.js';
+import reducer from '../reducers/index.js';
 
 import AppleBasket from '../containers/AppleBasket.jsx'
 import '../styles/appleBasket.scss'
